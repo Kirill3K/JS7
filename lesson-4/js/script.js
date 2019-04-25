@@ -14,16 +14,15 @@ function start () {
 start();
 
 let appData = {
+    
     budget: money,
     timeData: time,
     expenses: {},
     optionalExpenses: {},
     income: [],
-    savings: true
-};
-
-function chooseExpenses(){
-    for (let i = 0; i < 2; i++){
+    savings: true,
+    chooseExpenses: function() {
+        for (let i = 0; i < 2; i++){
         let a = prompt('Введите обязательную статью расходов в этом месяце', ''),
             b = prompt('Во сколько обойдется?', '');
         if ( (typeof(a)) === 'string' && a != null && b != null
@@ -34,16 +33,12 @@ function chooseExpenses(){
             i--;
         }
     }
-}
-chooseExpenses();
-
-function detectDayBudget(){
+},
+detectDayBudget: function(){
     appData.detectDayBudget = (appData.budget / 30).toFixed();
     alert('Ежедневный бюджет: ' + appData.detectDayBudget);
-}
-detectDayBudget();
-
-function detectLevel(){
+},
+detectLevel: function(){
     if (appData.detectDayBudget < 100){
         alert('Небольшой уровень достатка');
     } else if (appData.detectDayBudget > 100 && appData.detectDayBudget < 1000){
@@ -53,28 +48,42 @@ function detectLevel(){
     } else {
         alert('Произошла ошибка');
     }
-}
-detectLevel();
-
-function chooseOptExpenses(){
+},
+checkSavings: function(){
+    if (appData.savings == true) {
+        let save = +prompt('Сумма накоплений?'),
+            percent = +prompt('Процент депозита?');
+        appData.monthlyIncome = save/100/12*percent;
+        alert('Ваш доход от депозита: ' + appData.monthlyIncome);
+    }
+},
+chooseOptExpenses: function(){
     for (let i = 0; i < 3; i++){
         let chooseOptExpenses = prompt('Статья необязательных расходов?', '');
         if ( (typeof(chooseOptExpenses)) === 'string' && chooseOptExpenses != null && chooseOptExpenses != ''){
-            appData.optionalExpenses[i+1] = chooseOptExpenses;
+            appData.optionalExpenses[i] = chooseOptExpenses;
         } else {
             i--;
         }
     }
+},
+chooseIncome: function(){
+    for (let i = 0; i < 1; i++){
+        let items = prompt('Способы доп. заработка? (Перечислите через запятую)','');
+        if ((typeof(items)) === 'string' && items != null && items != ''){
+            appData.income = items.split(',');
+            appData.income.push(prompt('Может что-то еще?'));
+            appData.income.sort();
+            } else {
+                i--;
+            }
+            appData.income.forEach(function(item, i){
+                alert(i+1 + ' Способы доп. заработка: ' + item);
+            });
+        }
+    }
+};
+
+for (let key in appData){
+    console.log('Наша программа включает в себя данные: ' + key + appData[key]);
 }
-chooseOptExpenses();
-
-// function checkSavings(){
-//     if (appData.savings == true) {
-//         let save = +prompt('Сумма накоплений?'),
-//             percent = +prompt('Процент депозита?');
-
-//         appData.monthlyIncome = save/100/12*percent;
-//         alert('Ваш доход от депозита: ' + appData.monthlyIncome);
-//     }
-// }
-// checkSavings();
