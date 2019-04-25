@@ -5,7 +5,6 @@ let money, time;
 function start () {
     money = +prompt('Ваш бюджет на месяц', '');
     time = prompt('Введите дату в формате YYYY-MM-DD', '');
-
     while(isNaN(money) || money == '' || money == null){
         money = +prompt('Ваш бюджет на месяц', '');
     }
@@ -68,20 +67,36 @@ chooseOptExpenses: function(){
     }
 },
 chooseIncome: function(){
-    for (let i = 0; i < 1; i++){
-        let items = prompt('Способы доп. заработка? (Перечислите через запятую)','');
-        if ((typeof(items)) === 'string' && items != null && items != ''){
-            appData.income = items.split(',');
-            appData.income.push(prompt('Может что-то еще?'));
-            appData.income.sort();
-            } else {
-                i--;
-            }
-            appData.income.forEach(function(item, i){
-                alert(i+1 + ' Способы доп. заработка: ' + item);
-            });
-        }
+    let items = prompt('Способы доп. заработка? (Перечислите через запятую)','');
+    while(!isNaN(items) || items == '' || items == null){
+        items = prompt('Способы доп. заработка? (Перечислите через запятую)','')};
+        appData.income = items.split(',');
+        let answer = prompt('Может что-то еще?','');
+        while(!isNaN(answer) || answer == '' || answer == null){
+            answer = prompt('Может что-то еще?','')};
+        appData.income.push(answer);      
+        appData.income.sort();
+        appData.income.forEach(function(item, i){
+            alert(i+1 + 'Способы доп. заработка: ' + item)
+        });
     }
+
+
+// chooseIncome: function(){
+//     for (let i = 0; i < 1; i++){
+//         let items = prompt('Способы доп. заработка? (Перечислите через запятую)','');
+//         if ((typeof(items)) === 'string' && items != null && items != ''){
+//             appData.income = items.split(',');
+//             appData.income.push(prompt('Может что-то еще?'));
+//             appData.income.sort();
+//             } else {
+//                 i--;
+//             }
+//             appData.income.forEach(function(item, i){
+//                 alert(i+1 + ' Способы доп. заработка: ' + item);
+//             });
+//         }
+//     }
 };
 
 for (let key in appData){
