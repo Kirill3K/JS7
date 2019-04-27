@@ -71,14 +71,17 @@ chooseIncome: function(){
     while(!isNaN(items) || items == '' || items == null){
         items = prompt('Способы доп. заработка? (Перечислите через запятую)','')};
         appData.income = items.split(',');
-        let answer = prompt('Может что-то еще?','');
-        while(!isNaN(answer) || answer == '' || answer == null){
-            answer = prompt('Может что-то еще?','')};
-        appData.income.push(answer);      
-        appData.income.sort();
-        appData.income.forEach(function(item, i){
-            alert(i+1 + 'Способы доп. заработка: ' + item)
-        });
+            let answer = prompt('Может что-то еще?','');
+            if(isNaN(answer) && answer != null && answer != ''){
+               appData.income.push(answer);
+            }   
+               appData.income.sort(function(a, b){
+                   return a-b;
+               });
+               appData.income.forEach(function(item, i){
+                   alert('Способы доп. заработка: ' + (i+1) + '. ' + item);
+               });    
+        
     }
 
 
