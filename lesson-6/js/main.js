@@ -25,13 +25,22 @@ let startBtn = document.querySelector('#start'),
 
 let money, time;
 
+let appData = {
+    budget: money,
+    expenses: {},
+    optionalExpenses: {},
+    income: [],
+    timeData: time,
+    savings: false,
+};
+
 expencesBtn.disabled = true;
 expencesBtn.style.backgroundImage = 'none';
 optionalExpensesBtn.disabled = true;
 optionalExpensesBtn.style.backgroundImage = 'none';
 countBtn.disabled = true;
 countBtn.style.backgroundImage = 'none';
-    
+
 startBtn.addEventListener('click', function() {
 	time = prompt('Введите дату в формате YYYY-MM-DD', ''); 
     money = +prompt('Ваш бюджет на месяц', '');
@@ -46,13 +55,38 @@ startBtn.addEventListener('click', function() {
     monthValue.value = new Date(Date.parse(time)).getMonth() +1;
     dayValue.value = new Date(Date.parse(time)).getDate();
 
-    expencesBtn.disabled = false;
-    expencesBtn.style.backgroundImage = '';
-    optionalExpensesBtn.disabled = false;
-    optionalExpensesBtn.style.backgroundImage = '';
-    countBtn.disabled = false;
-    countBtn.style.backgroundImage = '';
-});
+    for (let i = 0; i < expencesItem.length; i++){
+        expencesItem[i].addEventListener('input', function() {
+            let empty = true;
+
+            for (let k = 0; k < expencesItem.length; k++){
+                if(expencesItem[k].value == ''){
+                   empty = false;
+                   break;
+                }
+            };
+
+            if(empty){
+                expencesBtn.disabled = false;
+                expencesBtn.style.backgroundImage = '';
+            } else {
+                expencesBtn.disabled = true;
+                expencesBtn.style.backgroundImage = 'none';
+            }
+        });
+    };
+
+for (let i = 0; i < optionalExpencesItem.length; i++){
+    optionalExpencesItem[i].addEventListener('input', function() {
+        if(optionalExpencesItem[i].value !== ''){
+            optionalExpensesBtn.disabled = false;
+            optionalExpensesBtn.style.backgroundImage = '';
+        } else {
+            optionalExpensesBtn.disabled = true;
+            optionalExpensesBtn.style.backgroundImage = 'none';
+        }
+    });
+};
 
 expencesBtn.addEventListener('click', function() {
     let sum = 0;
@@ -69,6 +103,8 @@ expencesBtn.addEventListener('click', function() {
             i--;
         }
     }
+    countBtn.disabled = false;
+    countBtn.style.backgroundImage = '';  
     expensesValue.textContent = sum;
 });
 
@@ -83,7 +119,7 @@ optionalExpensesBtn.addEventListener('click', function() {
 countBtn.addEventListener('click', function() {
 
     if (appData.budget != undefined) {
-        appData.moneyPerDay = (appData.budget - +expensesValue.textContent / 30).toFixed();
+        appData.moneyPerDay = ((appData.budget - +expensesValue.textContent) / 30).toFixed();
         console.log(appData.expenses);
         dayBudgetValue.textContent =  appData.moneyPerDay; 
     
@@ -140,12 +176,5 @@ percentValue.addEventListener('input', function() {
         yearSavingsValue.textContent = appData.yearIncome.toFixed(1);
     }
 });
-    
-let appData = {
-    budget: money,
-    expenses: {},
-    optionalExpenses: {},
-    income: [],
-    timeData: time,
-    savings: false,
-};
+
+});  
