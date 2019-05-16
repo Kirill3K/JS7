@@ -149,11 +149,11 @@ window.addEventListener('DOMContentLoaded', () => { //скрипт запуск�
 					request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
 
 					let obj = {};  
-					formData.forEach((value, key) => {
+					data.forEach((value, key) => {
 						obj[key] = value;
 					});
 
-					let data = JSON.stringify(obj); //превращает обычный JS объект в JSON файл
+					let sendData = JSON.stringify(obj); //превращает обычный JS объект в JSON файл
 
 					request.onreadystatechange = function() {
 						if (request.readyState < 4) {
@@ -165,7 +165,7 @@ window.addEventListener('DOMContentLoaded', () => { //скрипт запуск�
 						}
 					}
 
-					request.send(data);
+					request.send(sendData);
 				});
 
             } // Конец postData
