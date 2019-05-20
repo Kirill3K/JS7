@@ -1,7 +1,7 @@
-window.addEventListener('DOMContentLoaded', () => { //скрипт запускается после загрузки ДОМ-структуры страницы
+window.addEventListener('DOMContentLoaded', () => { 
 
     'use strict';
-    let tab = document.querySelectorAll('.info-header-tab'), //достаем классы для дальнейшего использования
+    let tab = document.querySelectorAll('.info-header-tab'), 
         info = document.querySelector('.info-header'),
         tabContent = document.querySelectorAll('.info-tabcontent');
 
@@ -36,15 +36,15 @@ window.addEventListener('DOMContentLoaded', () => { //скрипт запуск�
 
     //Timer 
 
-    let deadline = '2019-05-07';
+    let deadline = '2019-05-20';
 
-    function getTimeRemaining(endtime) {
+    let getTimeRemaining = (endtime) => {
         let t = Date.parse(endtime) - Date.parse(new Date()),
-            seconds = Math.floor((t/1000) % 60), //кол-во мс делим на 1000 (узнаем сколько сек) и отдаём остаток
-            minutes = Math.floor((t/1000/60) % 60), //кол-во мс делим на 1000 и на 60 - кол-во минут и отдаём остаток
-            hours = Math.floor((t/(1000*60*60))); //кол-во часов, без ограничений
+            seconds = Math.floor((t/1000) % 60), 
+            minutes = Math.floor((t/1000/60) % 60), 
+            hours = Math.floor((t/(1000*60*60))); 
 
-        return { //ф-ия, кот. опр. остаток времени и вычленяет из него всё время, часы, минуты, секунды
+        return { 
             'total' : t,
             'hours' : hours,
             'minutes' : minutes,
@@ -53,7 +53,7 @@ window.addEventListener('DOMContentLoaded', () => { //скрипт запуск�
         };
     }
 
-    function setClock(id, endtime) { //ф-ия выставляет и запускает часы
+    function setClock(id, endtime) { 
         let timer = document.getElementById(id),
             hours = timer.querySelector('.hours'),
             minutes = timer.querySelector('.minutes'),
@@ -98,9 +98,9 @@ window.addEventListener('DOMContentLoaded', () => { //скрипт запуск�
         btns = document.querySelectorAll('description-btn');
     
     more.addEventListener('click', function() {
-        overlay.style.display = 'block'; // при нажатии на оверлей, он стоновится блоком
-        this.classList.add('more-splash'); // анимация для кнопки. Обращаемся к кнопке, которую нажали, путем добавления нового класса
-        document.body.style.overflow = 'hidden'; // убираем прокрутку
+        overlay.style.display = 'block'; 
+        this.classList.add('more-splash'); 
+        document.body.style.overflow = 'hidden'; 
     });
 
     close.addEventListener('click', () => {
@@ -191,7 +191,7 @@ window.addEventListener('DOMContentLoaded', () => { //скрипт запуск�
 
     let validationPhone = document.querySelectorAll('input[type=tel]');
 
-    validationPhone.forEach(function(item){
+    validationPhone.forEach((item) => {
         item.addEventListener('input', function() {
             item.value = item.value.replace (/[^\+\d]/g, '');
         });
@@ -199,46 +199,31 @@ window.addEventListener('DOMContentLoaded', () => { //скрипт запуск�
 
     // Slider
 
-    // обьявляем переменные, используемые в нашем слайдере
-    let slideIndex = 1, // номер (параметр) текущего слайдера
-        slides = document.querySelectorAll('.slider-item'), // получаем предметы слайда
-        prev = document.querySelector('.prev'), // получаем элементы навигации (вперёд, назад)
+    let slideIndex = 1, 
+        slides = document.querySelectorAll('.slider-item'), 
+        prev = document.querySelector('.prev'), 
         next = document.querySelector('.next'),
-        dotsWrap = document.querySelector('.slider-dots'), // получаем обёртку навигации слайдера
-        dots = document.querySelectorAll('.dot'); // получаем навигацию слайдера (точки)
-
-// Во-первых, надо написать функцию, которая бы скрывала слайды и показывала только первый
-// Можно её сделать универсальной (show slides)
+        dotsWrap = document.querySelector('.slider-dots'), 
+        dots = document.querySelectorAll('.dot'); 
 
     showSlides(slideIndex);
 
-// Сркытие всех сладов, 2 вида
     function showSlides(n) {
 
-        // возврат к первому слайду
         if (n > slides.length) {
             slideIndex = 1;
         }
-        // возврат к последнему слайду
         if (n < 1) {
             slideIndex = slides.length;
         }
 
-
         slides.forEach((item) => item.style.display = 'none');
-        // for (let i = 0; i > slides.length; i++) {
-        //     slides[i].style.display = 'none';
-        // }
-
-        // убираем класс актив с точек
         dots.forEach((item) => item.classList.remove('dot-active'));
 
-        // показываем слайд и точку, который нужен (первый)
         slides[slideIndex - 1].style.display = 'block';
         dots[slideIndex - 1].classList.add('dot-active');
     }
 
-    // изменяет slideIndex, в зависимости от того, в какую сторону идём
     function plusSlides(n) {
         showSlides(slideIndex += n);
     }
@@ -246,7 +231,6 @@ window.addEventListener('DOMContentLoaded', () => { //скрипт запуск�
         showSlides(slideIndex = n);
     }
 
-    // перелистывание точек
     prev.addEventListener('click', function() {
         plusSlides(-1);
     });
@@ -255,7 +239,6 @@ window.addEventListener('DOMContentLoaded', () => { //скрипт запуск�
         plusSlides(1);
     });
 
-    // перелистываение с помощью точек
     dotsWrap.addEventListener('click', function(event) {
         for (let i = 0; i < dots.length + 1; i++) {
             if (event.target.classList.contains('dot') && event.target == dots[i-1]) {
@@ -276,23 +259,21 @@ window.addEventListener('DOMContentLoaded', () => { //скрипт запуск�
 
         totalValue.innerHTML = 0;
 
-        persons.addEventListener('change', function() {
-            personsSum = +this.value; // получаем значение от пользователя
-            total = (daysSum * personsSum)*4000; //матем. операция записыв. в тотал
+        persons.addEventListener('input', function() {
+            personsSum = +this.value; 
+            total = (daysSum * personsSum)*4000*place.options[place.selectedIndex].value; 
 
-            // проверка на пустоту второго инпута
-            if(restDays.value == '') { 
+            if(restDays.value == '' || restDays.value == 0) { 
                 totalValue.innerHTML = 0;
             } else {
                 totalValue.innerHTML = total;
             }
         });
-        restDays.addEventListener('change', function() {
-            daysSum = +this.value; // получаем значение от пользователя
-            total = (daysSum * personsSum)*4000; //матем. операция записыв. в тотал
+        restDays.addEventListener('input', function() {
+            daysSum = +this.value; 
+            total = (daysSum * personsSum)*4000*place.options[place.selectedIndex].value; 
 
-            // проверка на пустоту второго инпута
-            if(persons.value == '') { 
+            if(persons.value == '' || persons.value == 0) { 
                 totalValue.innerHTML = 0;
             } else {
                 totalValue.innerHTML = total;
@@ -300,7 +281,7 @@ window.addEventListener('DOMContentLoaded', () => { //скрипт запуск�
         });
 
         place.addEventListener('change', function() {
-            if (restDays.value == '' || persons.value == '') {
+            if (restDays.value == '' || persons.value == 0) {
                 total.value.innerHTML = 0;
             } else {
                 let a = total;
@@ -310,9 +291,9 @@ window.addEventListener('DOMContentLoaded', () => { //скрипт запуск�
     
     let validationNumber = document.querySelectorAll('input[type=number]');
 
-    validationNumber.forEach(function(item){
+    validationNumber.forEach((item) => {
         item.addEventListener('input', function() {
-            item.value = item.value.replace (/[^\+\d]/g, '');
+            item.value = item.value.replace (/[^\d]/g, '');
         });
     });
     

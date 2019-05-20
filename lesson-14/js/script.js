@@ -1,50 +1,10 @@
 $(document).ready(function() {
-    $('.main_btna').on('click', function() {
-        $('.overlay').animate(
-            {
-                opacity: 'toggle',
-            }
-        );
-        $('.modal').animate(
-            {
-                height: 'toggle',
-            }
-        );
+    $('.main_btna, .main_btn, .main_nav li:eq(1)').on('click', function() {
+        $('.overlay').fadeIn();
+        $('.modal').slideDown();
     });
-    $('.main_btn').on('click', function() {
-        $('.overlay').animate(
-            {
-                opacity: 'toggle',
-            }
-        );
-        $('.modal').animate(
-            {
-                height: 'toggle',
-            }
-        );
-    });
-    $('.main_nav li:eq(1)').on('click', function() {
-        $('.overlay').animate(
-            {
-                opacity: 'toggle',
-            }
-        );
-        $('.modal').animate(
-            {
-                height: 'toggle',
-            }
-        );
-    });
-    $('.close').on('click', function() {
-        $('.overlay').animate(
-            {
-                opacity: 'toggle',
-            }
-        );
-        $('.modal').animate(
-            {
-                height: 'toggle',
-            }
-        );
+    $('.close').on('click', function(){
+        $('.overlay').fadeOut();
+        $('.modal').slideUp();
     });
 });
